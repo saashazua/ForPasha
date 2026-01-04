@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>invitation birthday 💗</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+body{
+ margin:0;
+ font-family:'Poppins',sans-serif;
+ background:linear-gradient(120deg,#fde2e4,#e0c3fc,#fff1c1,#fbc2eb);
+ background-size:400% 400%;
+ animation:bgMove 18s ease infinite;
+ color:#444;
+ overflow-x:hidden;
+}
+@keyframes bgMove{
+ 0%{background-position:0% 50%}
+ 50%{background-position:100% 50%}
+ 100%{background-position:0% 50%}
+}
+
+body.night{
+ background:linear-gradient(120deg,#14002b,#2d1b69,#4b1c8f,#1b003a);
+ background-size:400% 400%;
+ animation:bgMove 20s ease infinite;
+ color:#f6f6f6;
+}
+
+/* FLOATING */
+.floating{
+ position:fixed;
+ bottom:-10vh;
+ opacity:.8;
+ animation:floatUp linear infinite;
+ pointer-events:none;
+}
+@keyframes floatUp{
+ to{transform:translateY(-130vh) rotate(360deg)}
+}
+
+/* SECTION */
+section{
+ min-height:100vh;
+ padding:60px 20px;
+ display:none;
+ text-align:center;
+ animation:fadeZoom 1s ease;
+}
+section.active{display:block}
+
+@keyframes fadeZoom{
+ from{opacity:0;transform:scale(.92) translateY(40px)}
+ to{opacity:1;transform:none}
+}
+
+h1,h2{
+ font-family:'Playfair Display',serif;
+ font-weight:400;
+ text-shadow:0 0 14px rgba(255,200,220,.6);
+}
+
+button{
+ padding:14px 38px;
+ border:none;
+ border-radius:50px;
+ background:linear-gradient(135deg,#f7a8b8,#cdb4db,#ffcad4);
+ color:white;
+ font-size:16px;
+ box-shadow:0 12px 30px rgba(0,0,0,.25);
+ transition:.4s;
+}
+button:hover{transform:scale(1.07)}
+
+input{
+ padding:14px;
+ border-radius:30px;
+ border:none;
+ width:220px;
+ text-align:center;
+}
+
+/* GAME */
+.game-grid{
+ display:grid;
+ grid-template-columns:repeat(5,1fr);
+ gap:14px;
+ max-width:350px;
+ margin:30px auto;
+}
+.card{
+ background:rgba(255,255,255,.65);
+ backdrop-filter:blur(12px);
+ height:64px;
+ border-radius:20px;
+ font-size:26px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ transition:.4s;
+}
+.card.matched{
+ background:linear-gradient(135deg,#b8f2e6,#cdb4db,#ffc8dd);
+ transform:scale(1.12);
+}
+
+/* CAKE */
+.cake{
+ font-size:130px;
+ animation:cakeFloat 2.5s ease-in-out infinite;
+}
+@keyframes cakeFloat{
+ 0%,100%{transform:translateY(0)}
+ 50%{transform:translateY(-18px)}
+}
+
+/* CONFETTI */
+.confetti{
+ position:fixed;
+ top:-20px;
+ font-size:22px;
+ animation:fall 3.5s linear forwards;
+}
+@keyframes fall{
+ to{transform:translateY(130vh) rotate(900deg);opacity:0}
+}
+
+/* GALLERY */
+.gallery img{
+ width:90%;
+ max-width:420px;
+ border-radius:30px;
+ margin-bottom:26px;
+ box-shadow:0 25px 60px rgba(0,0,0,.35);
+}
+
+/* INVITE */
+.invite{
+ background:rgba(255,255,255,.35);
+ backdrop-filter:blur(18px);
+ border-radius:45px;
+ padding:45px 20px;
+ box-shadow:0 35px 80px rgba(0,0,0,.35);
+}
+
+/* OUTFIT */
+.outfit{
+ display:flex;
+ justify-content:center;
+ gap:60px;
+ margin-top:30px;
+}
+.person{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ animation:sway 3s ease-in-out infinite;
+}
+@keyframes sway{
+ 0%,100%{transform:rotate(-2deg)}
+ 50%{transform:rotate(2deg)}
+}
+.head{font-size:48px}
+.top{width:56px;height:44px;border-radius:14px 14px 6px 6px;margin-top:6px}
+.bottom{width:56px;height:34px;border-radius:0 0 14px 14px;margin-top:4px}
+.black{background:#111}
+.white{background:#fafafa}
+.jorts-dark{background:#555}
+.jorts-light{background:#bbb}
+
+.footer{opacity:.7;font-size:14px;margin-top:30px}
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 AUDIO -->
+<audio id="clickSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_2d6a2b1e8c.mp3"></audio>
+<audio id="nextSound" src="https://cdn.pixabay.com/audio/2022/03/10/audio_8d1f1b3f3f.mp3"></audio>
+<audio id="successSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_3f9b5bbf65.mp3"></audio>
+<audio id="blowSound" src="https://cdn.pixabay.com/audio/2021/09/06/audio_6c1bba3d77.mp3"></audio>
+
+<audio autoplay loop>
+ <source src="https://cdn.pixabay.com/audio/2023/03/06/audio_2b7d6a1c1d.mp3">
+</audio>
+
+<script>
+const clickSound=document.getElementById('clickSound');
+const nextSound=document.getElementById('nextSound');
+const successSound=document.getElementById('successSound');
+const blowSound=document.getElementById('blowSound');
+
+function play(sound){
+ sound.currentTime=0;
+ sound.play();
+}
+
+/* FLOATING */
+const icons=['💗','✨','🦋','🌸','🎂','💖'];
+for(let i=0;i<60;i++){
+ let f=document.createElement('div');
+ f.className='floating';
+ f.textContent=icons[Math.floor(Math.random()*icons.length)];
+ f.style.left=Math.random()*100+'vw';
+ f.style.fontSize=12+Math.random()*24+'px';
+ f.style.animationDuration=10+Math.random()*14+'s';
+ document.body.appendChild(f);
+}
+</script>
+
+<!-- PASSWORD -->
+<section class="active" id="p0">
+ <h1>Secret Birthday Page 🔒</h1>
+ <p>only for someone special 🤍</p>
+ <input type="password" id="pw" placeholder="password"><br><br>
+ <button onclick="checkPW()">Enter</button>
+ <p id="pwText"></p>
+</section>
+
+<section id="p1">
+ <h1>haii pasallkuu 💕</h1>
+ <p>aku punya little surprise yang dibuat dengan sepenuh hati untuk kamu</p>
+ <button onclick="go(2)">start game</button>
+</section>
+
+<section id="p2">
+ <h2>let's play a little game before ur surprise 🎮</h2>
+ <div class="game-grid" id="game"></div>
+ <p id="gameText"></p>
+ <button id="nextGame" style="display:none" onclick="go(3)">NEXT</button>
+</section>
+
+<section id="p3">
+ <div class="cake">🎂🕯️</div>
+ <h2>close ur eyes</h2>
+ <p>buatlah permintaan lalu tiup lilin</p>
+ <button onclick="blow()">Tiup Lilin</button>
+</section>
+
+<section id="p4">
+ <h1>happy 19th birthday cintaa</h1>
+ <p>semoga dunia selalu baik sama kamu 🤍</p>
+ <button onclick="go(5)">Next</button>
+</section>
+
+<section id="p5">
+ <h2>i hope u always happy 🌷</h2>
+ <div class="gallery">
+  <img src="https://picsum.photos/400/600?1">
+  <img src="https://picsum.photos/400/600?2">
+  <img src="https://picsum.photos/400/600?3">
+  <img src="https://picsum.photos/400/600?4">
+ </div>
+ <div class="footer">made with love, zuaa 💗</div><br>
+ <button onclick="go(6)">Next</button>
+</section>
+
+<section id="p6" class="invite">
+ <h2>9 April</h2>
+ <h1>Pasha Maulana Akbar</h1>
+ <button onclick="go(7)">Next</button>
+</section>
+
+<section id="p7" class="invite">
+ <div>🛵 pick up ur girlfriend</div>
+ <div>📍 meet point</div>
+ <div>🕖 time</div>
+ <div>💖 birthday plan</div>
+ <br>
+ <button onclick="go(8)">Next</button>
+</section>
+
+<section id="p8" class="invite">
+ <h1>Match Outfit 🤍</h1>
+ <div class="outfit">
+  <div class="person">
+   <div class="head">👩</div>
+   <div class="top white"></div>
+   <div class="bottom jorts-light"></div>
+  </div>
+  <div class="person">
+   <div class="head">👨</div>
+   <div class="top black"></div>
+   <div class="bottom jorts-dark"></div>
+  </div>
+ </div>
+ <p style="margin-top:22px;font-style:italic">
+  kaos putih & kaos hitam<br>
+  jorts together 🤍
+ </p>
+ <button onclick="go(9)">Next</button>
+</section>
+
+<section id="p9" class="invite">
+ <h1>enjoy ur birthday</h1>
+ <h2>sayangku cintaku 💕</h2>
+</section>
+
+<script>
+function go(n){
+ play(nextSound);
+ document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+ document.getElementById('p'+n).classList.add('active');
+ if(n>=6) document.body.classList.add('night');
+}
+
+function checkPW(){
+ play(clickSound);
+ if(pw.value==='happy19'){go(1)}
+ else pwText.textContent='password salah 🤭'
+}
+
+/* GAME */
+const emojis=['💗','🌸','🍓','🦋','✨'];
+let cards=[...emojis,...emojis].sort(()=>0.5-Math.random());
+let first=null,lock=false,matched=0;
+const game=document.getElementById('game');
+cards.forEach(e=>{
+ let c=document.createElement('div');
+ c.className='card';
+ c.onclick=()=>{play(clickSound);flip(c,e)};
+ game.appendChild(c);
+});
+function flip(card,emoji){
+ if(lock||card.textContent)return;
+ card.textContent=emoji;
+ if(!first)first={card,emoji};
+ else{
+  if(first.emoji===emoji){
+   card.classList.add('matched');
+   first.card.classList.add('matched');
+   matched+=2;
+   if(matched===cards.length){
+    play(successSound);
+    gameText.textContent="yeay u got it, sekarang saatnya make a wish sayangku 💕";
+    nextGame.style.display='inline-block';
+   }
+   first=null;
+  }else{
+   lock=true;
+   setTimeout(()=>{
+    card.textContent='';
+    first.card.textContent='';
+    first=null;
+    lock=false;
+   },800);
+  }
+ }
+}
+
+function blow(){
+ play(blowSound);
+ for(let i=0;i<80;i++){
+  let c=document.createElement('div');
+  c.className='confetti';
+  c.textContent=['🎉','💗','✨','🌸','🦋'][Math.floor(Math.random()*5)];
+  c.style.left=Math.random()*100+'vw';
+  document.body.appendChild(c);
+  setTimeout(()=>c.remove(),3500);
+ }
+ setTimeout(()=>go(4),1200);
+}
+</script>
+
+</body>
+</html>
